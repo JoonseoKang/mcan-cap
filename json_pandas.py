@@ -38,7 +38,7 @@ df_addcap.to_json('./datasets/caption/train_cap.json', orient='table')
 with open('./datasets/caption/train_cap.json') as train_cap:
     train_cap = json.load(train_cap)
 ########################################################################################################################
-"""val test도 마찬가지"""로
+"""val test도 마찬가지"""
 
 path = './datasets/vqa/v2_OpenEnded_mscoco_val2014_questions.json'
 
@@ -156,6 +156,7 @@ test셋은 답을 제공하지 않아서 test할 때 답을 이용하는 모델�
 
 ####
 import cal_sim
+import pandas as pd
 
 with open('datasets/caption/train_cap.json') as train_cap:
     train_cap = json.load(train_cap)
@@ -173,25 +174,29 @@ df_test = pd.DataFrame(test_cap['data'])
 df_train[:0]
 
 
-df_train['similarity'] = cal_sim.sent_sim((df_train['question'], dtype=int32), (df_train['caption'], dtype=int32))
+# df_train['similarity'] = cal_sim.sent_sim((df_train['question'], dtype=int32), (df_train['caption'], dtype=int32))
 
 df_train.iloc[0]['question']
 
 
 def txt2vec(sentence):
-    s = sentence.split()
+    # s = sentence.split()
     tt = []
-    for i in s:
-        new_i = re.sub(
-            r"([.,'!?\"()*#:;])",
-            '',
-            i.lower()
-        )
-        num = token_to_ix[new_i]
+
+    new_i = re.sub(
+        r"([.,'!?\"()*#:;])",
+        '',
+        sentence.lower()
+    ).replace('-', ' ').replace('/', ' ').split()
+
+    for i in new_i:
+        num = token_to_ix[i]
         tt.append(pretrained_emb[num])
     return tt
 
 
+
+stat_ques_list[0]
 
 token_to_ix['what']
 len(txt2vec(df_train.iloc[0]['question']))
@@ -206,7 +211,7 @@ from numpy.linalg import norm
 import numpy as np
 
 def cos_sim(A, B):
-    return dot(A, B) / (norm(A) * norm(B))
+    return dot(A, np.transpose(B)) / (norm(A) * norm(B))
 
 def word_sim(w1,w2): #word simiarity
     s = 0.5 * (1+ cos_sim(w1,w2))
@@ -216,17 +221,35 @@ def sent_sim(ss1, ss2): #sentence simiarity
     s1 = txt2vec(ss1)
     s2 = txt2vec(ss2)
     t = []
+
     for i in s1[2:]: #question   0,1 are PAD, UNK
         tmp = []
         for j in s2[2:]: #caption
             tmp_sim = word_sim(i,j)
             tmp.append(tmp_sim)
         t.append(max(tmp))
-        sent_sim = sum(t) / len(s1[2:])
-    return sent_sim
+        sentence_sim = sum(t) / len(s1[2:])
+    return sentence_sim
 
 
-sent_sim(df_train.iloc[10]['question'], df_train.iloc[8]['caption'])
+t = sent_sim('yes', 'hello')
+tmp = sent_sim(df_train.iloc[105]['question'], df_train.iloc[103]['caption'])
+t1 = sent_sim('Is there a travel guide on the table?', 'A place of cake and coffee are on an outdoor table')
+t2 = sent_sim('yes', 'A place of cake and coffee are on an outdoor table')
+t3 = sent_sim('no', 'no')
 
-df_train.iloc[11]['question'] #유사도 좀 이상한 듯 너무 높게 나오는 것 같
-df_train.iloc[8]['caption']
+df_train.iloc[105]['question'] #유사도 좀 이상한 듯 너무 높게 나오는 것 같은느낌
+df_train.iloc[103]['caption']
+
+cos_sim(txt2vec('e'), txt2vec('z'))
+
+new_i = re.sub(
+            r"([.,'!?\"()*#:;])",
+            '',
+            df_train.iloc[102]['question'].lower()
+        ).replace('-', ' ').replace('/', ' ').split()
+
+
+
+
+np.dot(txt2vec(df_train.iloc[103]['question']), txt2vec(df_train.iloc[103]['caption']))
