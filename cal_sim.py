@@ -148,6 +148,37 @@ with open('datasets/caption/val_cap.json', 'w') as f2:
 
 with open('datasets/caption/test_cap.json', 'w') as f3:
     json.dump(test_cap, f3)
+
+########################################################################################################################
+"""similarity distribution check"""
+df_train = pd.DataFrame(train_cap['data'])
+df_val = pd.DataFrame(val_cap['data'])
+df_test = pd.DataFrame(test_cap['data'])
+
+import matplotlib.pyplot as plt
+plt.hist([df_train['similarity'], df_val['similarity'], df_test['similarity']], label=['train', 'val', 'test'])
+# plt.hist(df_train['similarity'],color='blue', label='train', alpha=0.5)
+# plt.hist(df_val['similarity'],color='red', label='val', alpha=0.5)
+# plt.hist(df_test['similarity'], color='green', label='test', alpha=0.5)
+plt.legend(loc='upper right')
+plt.show()
+########################################################################################################################
+"""similarity check"""
+df_t = df_train.drop(['image_id', 'question_id'], axis='columns')
+df_t.sort_values(by='similarity')
+df_t['similarity'].isnull().sum() #275개
+df_t = df_t.fillna(0)
+
+df_t = df_t.sort_values(by='similarity', ascending=False)
+df_t.iloc[0]
+df_t.iloc[15]
+
+df_t.describe()
+
+# sent_sim('Where are they riding a skylift?', 'a man and a woman posing for a picture')
+#
+# txt2vec('skylift') 모두 0 인 matrix
+# word_sim(txt2vec('skylift'), txt2vec('picture'))
 ########################################################################################################################
 # from core.data.ans_punct import prep_ans
 # import numpy as np
