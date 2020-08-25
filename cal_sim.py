@@ -163,17 +163,27 @@ plt.hist([df_train['similarity'], df_val['similarity'], df_test['similarity']], 
 plt.legend(loc='upper right')
 plt.show()
 ########################################################################################################################
+"""train+val"""
+df_tv = pd.concat([df_train, df_val], ignore_index=True)
+df_tv = df_tv.drop(['image_id', 'question_id'], axis='columns')
+df_tv = df_tv.sort_values(by='similarity',ascending=False)
+df_tv['similarity'].isnull().sum() #413개
+df_tv = df_tv.fillna(0)
+df_tv.describe() # q3 is 0.83 mean is 0.80 q1 is 0.77
+
+
+
 """similarity check"""
-df_t = df_train.drop(['image_id', 'question_id'], axis='columns')
-df_t.sort_values(by='similarity')
-df_t['similarity'].isnull().sum() #275개
-df_t = df_t.fillna(0)
+# df_t = df_train.drop(['image_id', 'question_id'], axis='columns')
+# df_t.sort_values(by='similarity')
+# df_t['similarity'].isnull().sum() #275개
+# df_t = df_t.fillna(0)
 
-df_t = df_t.sort_values(by='similarity', ascending=False)
-df_t.iloc[0]
-df_t.iloc[15]
-
-df_t.describe()
+# df_t = df_t.sort_values(by='similarity', ascending=False)
+# df_t.iloc[0]
+# df_t.iloc[15]
+#
+# df_t.describe()
 
 # sent_sim('Where are they riding a skylift?', 'a man and a woman posing for a picture')
 #
