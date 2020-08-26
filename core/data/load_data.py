@@ -40,9 +40,9 @@ class DataSet(Data.Dataset):
 
         # Loading question word list
         self.stat_ques_list = \
-            json.load(open(__C.QUESTION_PATH['train'], 'r'))['questions'] + \
-            json.load(open(__C.QUESTION_PATH['val'], 'r'))['questions'] + \
-            json.load(open(__C.QUESTION_PATH['test'], 'r'))['questions'] + \
+            json.load(open(__C.QUESTION_PATH['train'], 'r'))['data'] + \
+            json.load(open(__C.QUESTION_PATH['val'], 'r'))['data'] + \
+            json.load(open(__C.QUESTION_PATH['test'], 'r'))['data'] + \
             json.load(open(__C.QUESTION_PATH['vg'], 'r'))['questions']
 
         # Loading answer word list
@@ -56,7 +56,7 @@ class DataSet(Data.Dataset):
 
         split_list = __C.SPLIT[__C.RUN_MODE].split('+')
         for split in split_list:
-            self.ques_list += json.load(open(__C.QUESTION_PATH[split], 'r'))['questions']
+            self.ques_list += json.load(open(__C.QUESTION_PATH[split], 'r'))['data']
             if __C.RUN_MODE in ['train']:
                 self.ans_list += json.load(open(__C.ANSWER_PATH[split], 'r'))['annotations']
 
