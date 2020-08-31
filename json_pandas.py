@@ -10,9 +10,9 @@ path = './datasets/vqa/v2_OpenEnded_mscoco_train2014_questions.json'
 with open(path) as question:
     question = json.load(question)
 
-question['questions'][0]
-question['questions'][1]
-question['questions'][2]
+# question['questions'][0]
+# question['questions'][1]
+# question['questions'][2]
 
 df = pd.DataFrame(question['questions'])
 df
@@ -26,18 +26,52 @@ df_cap = pd.DataFrame(cap)
 df_cap
 
 df_addcap = pd.merge(df, df_cap, how='left', on='image_id')
-df_addcap[:0]
+
 del df_addcap['file_path']
 
 ########################################################################################################################
 """
 pandas to json
 """
-df_addcap.to_json('./datasets/caption/train_cap.json', orient='table')
+df_addcap.to_json('./datasets/caption/train_cap2.json', orient='table')
 
-with open('./datasets/caption/train_cap.json') as train_cap:
+with open('./datasets/caption/train_cap2.json') as train_cap:
     train_cap = json.load(train_cap)
 ########################################################################################################################
+
+########################################################################################################################
+"""
+answer + cap
+"""
+path = '/home/nextgen/Desktop/mcan-vqa/datasets/vqa/v2_mscoco_train2014_annotations.json'
+
+with open(path) as answer:
+    answer = json.load(answer)
+
+answer['annotations'][0]
+
+df_ans = pd.DataFrame(answer['annotations'])
+df_ans[:0]
+
+del df_ans['question_type']
+del df_ans['answers']
+del df_ans['answer_type']
+del df_ans['image_id']
+
+df_ans[df_ans['question_id']==458752000]
+
+df_addcap2 = pd.merge(df_addcap, df_ans, how='left', on='question_id')
+df_addcap2[:0]
+df_addcap2['multiple_choice_answer']
+
+# del df_addcap['file_path']
+
+df_addcap2.to_json('./datasets/caption/train_qacap.json', orient='table')
+
+with open('./datasets/caption/train_qacap.json') as train_qacap:
+    train_qacap = json.load(train_qacap)
+########################################################################################################################
+
 """val test도 마찬가지"""
 
 path = './datasets/vqa/v2_OpenEnded_mscoco_val2014_questions.json'
@@ -63,7 +97,7 @@ del df_addcap['file_path']
 df_addcap.to_json('./datasets/caption/val_cap.json', orient='table')
 
 #test
-path = './datasets/vqa/v2_OpenEnded_mscoco_test2015_questions.json'
+path = './datasets/vqa/v2_OpenEnded_mscoco_test-dev2015_questions.json'
 
 with open(path) as question:
     question = json.load(question)

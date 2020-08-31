@@ -9,9 +9,10 @@ from numpy.linalg import norm
 import numpy as np
 
 stat_ques_list = \
-            json.load(open('./datasets/caption/train_cap.json', 'r'))['data'] + \
+            json.load(open('./datasets/caption/train_cap2.json', 'r'))['data'] + \
             json.load(open('./datasets/caption/val_cap.json', 'r'))['data'] + \
             json.load(open('./datasets/caption/test_cap.json', 'r'))['data']
+
 
 def tokenize(stat_ques_list, use_glove):
     token_to_ix = {
@@ -38,6 +39,7 @@ def tokenize(stat_ques_list, use_glove):
                 token_to_ix[word] = len(token_to_ix)
                 if use_glove:
                     pretrained_emb.append(spacy_tool(word).vector)
+
     for ques in stat_ques_list:
         words = re.sub(
             r"([.,'!?\"()*#:;])",
@@ -58,7 +60,7 @@ def tokenize(stat_ques_list, use_glove):
 token_to_ix, pretrained_emb = tokenize(stat_ques_list, True)
 
 
-with open('datasets/caption/train_cap.json') as train_cap:
+with open('datasets/caption/train_cap2.json') as train_cap:
     train_cap = json.load(train_cap)
 
 with open('datasets/caption/val_cap.json') as val_cap:
@@ -70,6 +72,8 @@ with open('datasets/caption/test_cap.json') as test_cap:
 # df_train = pd.DataFrame(train_cap['data'])
 # df_val = pd.DataFrame(val_cap['data'])
 # df_test = pd.DataFrame(test_cap['data'])
+from core.data.ans_punct import prep_ans
+
 
 def txt2vec(sentence):
     # s = sentence.split()
@@ -82,9 +86,20 @@ def txt2vec(sentence):
     ).replace('-', ' ').replace('/', ' ').split()
 
     for i in new_i:
-        num = token_to_ix[i]
-        tt.append(pretrained_emb[num])
+        if i in token_to_ix:
+            num = token_to_ix[i]
+            tt.append(pretrained_emb[num])
+        else:
+            # num = token_to_ix['UNK']
+            tt.append(pretrained_emb[1])
     return tt
+
+
+# bundesbahn
+txt2vec('bundesbahn')
+token_to_ix['bundesbahn']
+
+txt2vec('junseo')
 
 def cos_sim(A, B):
     return np.matmul(A, np.transpose(B)) / (norm(A) * norm(B))
@@ -103,6 +118,7 @@ def word_sim(w1,w2): #word simiarity
 def sent_sim(sent1, sent2):
     sent2vec1 = txt2vec(sent1) #question
     sent2vec2 = txt2vec(sent2) #caption
+    global sent_similarity
     sent_tmp = []
 
     for i in sent2vec1:
@@ -111,18 +127,92 @@ def sent_sim(sent1, sent2):
             tmp_sim = word_sim(i, j)
             vec_tmp.append(tmp_sim)
         sent_tmp.append(max(vec_tmp))
+
         sent_similarity = sum(sent_tmp) / len(sent2vec1)
+
     return sent_similarity
 
 
-
+sent_sim('is there a apple?', 'an apple is on the table')
+sent_sim('hello', 'hello')
 # train_cap['data'][0]['question']
 # train_cap['data'][0]['caption']
 # sent_sim(train_cap['data'][0]['question'], train_cap['data'][0]['caption'])
 # train_cap['data'][0]['similarity'] = sent_sim(train_cap['data'][0]['question'], train_cap['data'][0]['caption'])
 
+######train_answer similarity########
+# with open('./datasets/caption/train_qacap.json') as train_qacap:
+#     train_qacap = json.load(train_qacap)
+#
+# # def ans_stat(json_file):
+# #     ans_to_ix, ix_to_ans = json.load(open(json_file, 'r'))
+# #
+# #     return ans_to_ix, ix_to_ans
+#
+# # ans_to_ix, ix_to_ans = ans_stat('./core/data/answer_dict.json')
+#
+# for i in train_qacap['data']:
+#     i['answer'] = prep_ans(i['multiple_choice_answer'])
+#
+# for i in train_qacap['data']:
+#     del i['multiple_choice_answer']
+#     # del i['index']
+# with open('datasets/caption/train_qacap.json', 'w') as f:
+#     json.dump(train_qacap, f)
+
+with open('./datasets/caption/train_qacap.json') as train_qacap:
+    train_qacap = json.load(train_qacap)
+
+for i in train_qacap['data']:
+    i['q_similarity'] = sent_sim(i['question'], i['caption'])
+
+for i in train_qacap['data']:
+    i['a_similarity'] = sent_sim(i['multiple_choice_answer'], i['caption'])
+
+
+
+for i in train_qacap['data']:
+    i['total_similarity'] = (i['a_similarity'] + i['q_similarity'] ) / 2
+
+
+with open('datasets/caption/train_qacap_sim.json', 'w') as f:
+    json.dump(train_qacap, f)
+
+
+with open('./datasets/caption/train_qacap_sim.json') as train_qacap:
+    train_qacap = json.load(train_qacap)
+
+df_sim = pd.DataFrame(train_qacap['data'])
+
+# import matplotlib.pyplot as plt
+# # plt.hist([df_sim['similarity'], df_val['similarity'], df_test['similarity']], label=['train', 'val', 'test'])
+# plt.hist(df_sim['a_similarity'],color='blue', label='train', alpha=0.5)
+# plt.hist(df_sim['q_similarity'],color='red', label='val', alpha=0.5)
+# plt.hist(df_sim['total_similarity'], color='green', label='test', alpha=0.5)
+# plt.legend(loc='upper right')
+# plt.show()
+
+df_sim2 = df_sim.sort_values(by='total_similarity',ascending=False)
+
+df_sim2['total_similarity'].isnull().sum()
+
+df_sim2.iloc[0]
+del df_sim2['index']
+del df_sim2['image_id']
+del df_sim2['question']
+del df_sim2['question_id']
+del df_sim2['caption']
+del df_sim2['multiple_choice_answer']
+
+
+df_sim2.describe()
+
+
+#####################################
+
+
 for i in train_cap['data']:
-    i['similarity'] = sent_sim(i['question'], i['caption'])
+    i['q_similarity'] = sent_sim(i['question'], i['caption'])
 
 for i in val_cap['data']:
     i['similarity'] = sent_sim(i['question'], i['caption'])
