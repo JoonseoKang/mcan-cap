@@ -96,10 +96,10 @@ def txt2vec(sentence):
 
 
 # bundesbahn
-txt2vec('bundesbahn')
-token_to_ix['bundesbahn']
+# txt2vec('bundesbahn')
+# token_to_ix['bundesbahn']
 
-txt2vec('junseo')
+# txt2vec('junseo')
 
 def cos_sim(A, B):
     return np.matmul(A, np.transpose(B)) / (norm(A) * norm(B))
@@ -133,8 +133,8 @@ def sent_sim(sent1, sent2):
     return sent_similarity
 
 
-sent_sim('is there a apple?', 'an apple is on the table')
-sent_sim('hello', 'hello')
+# sent_sim('is there a apple?', 'an apple is on the table')
+# sent_sim('hello', 'hello')
 # train_cap['data'][0]['question']
 # train_cap['data'][0]['caption']
 # sent_sim(train_cap['data'][0]['question'], train_cap['data'][0]['caption'])
@@ -160,29 +160,29 @@ sent_sim('hello', 'hello')
 # with open('datasets/caption/train_qacap.json', 'w') as f:
 #     json.dump(train_qacap, f)
 
-with open('./datasets/caption/train_qacap.json') as train_qacap:
-    train_qacap = json.load(train_qacap)
+with open('./datasets/caption/val_qacap.json') as val_qacap:
+    val_qacap = json.load(val_qacap)
 
-for i in train_qacap['data']:
+for i in val_qacap['data']:
     i['q_similarity'] = sent_sim(i['question'], i['caption'])
 
-for i in train_qacap['data']:
+for i in val_qacap['data']:
     i['a_similarity'] = sent_sim(i['multiple_choice_answer'], i['caption'])
 
 
 
-for i in train_qacap['data']:
+for i in val_qacap['data']:
     i['total_similarity'] = (i['a_similarity'] + i['q_similarity'] ) / 2
 
 
-with open('datasets/caption/train_qacap_sim.json', 'w') as f:
-    json.dump(train_qacap, f)
+with open('datasets/caption/val_qacap_sim.json', 'w') as f:
+    json.dump(val_qacap, f)
 
 
 with open('./datasets/caption/train_qacap_sim.json') as train_qacap:
     train_qacap = json.load(train_qacap)
 
-df_sim = pd.DataFrame(train_qacap['data'])
+df_sim = pd.DataFrame(val_qacap['data'])
 
 # import matplotlib.pyplot as plt
 # # plt.hist([df_sim['similarity'], df_val['similarity'], df_test['similarity']], label=['train', 'val', 'test'])

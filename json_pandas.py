@@ -44,6 +44,7 @@ with open('./datasets/caption/train_cap2.json') as train_cap:
 answer + cap
 """
 path = '/home/nextgen/Desktop/mcan-vqa/datasets/vqa/v2_mscoco_train2014_annotations.json'
+path = './datasets/vqa/v2_mscoco_val2014_annotations.json'
 
 with open(path) as answer:
     answer = json.load(answer)
@@ -66,7 +67,7 @@ df_addcap2['multiple_choice_answer']
 
 # del df_addcap['file_path']
 
-df_addcap2.to_json('./datasets/caption/train_qacap.json', orient='table')
+df_addcap2.to_json('./datasets/caption/val_qacap.json', orient='table')
 
 with open('./datasets/caption/train_qacap.json') as train_qacap:
     train_qacap = json.load(train_qacap)

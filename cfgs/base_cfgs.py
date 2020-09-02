@@ -81,7 +81,7 @@ class Cfgs(PATH):
         self.WORD_EMBED_SIZE = 300
 
         # Max length of question sentences
-        self.MAX_TOKEN = 28    #수정   original: 14
+        self.MAX_TOKEN = 18    #수정   original: 14
 
         # Filter the answer by occurrence
         # self.ANS_FREQ = 8
@@ -97,7 +97,7 @@ class Cfgs(PATH):
         self.BATCH_SIZE = 64
 
         # Multi-thread I/O
-        self.NUM_WORKERS = 8
+        self.NUM_WORKERS = 4 #8
 
         # Use pin memory
         # (Warning: pin memory can accelerate GPU loading but may

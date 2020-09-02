@@ -11,6 +11,69 @@ with open('datasets/caption/test_cap.json') as test_cap:
     test_cap = json.load(test_cap)
 
 
+####
+"""
+answer
+"""
+
+with open('datasets/caption/train_qacap_sim.json') as train_qacap_sim:
+    train_qacap_sim = json.load(train_qacap_sim)
+
+with open('datasets/caption/val_qacap_sim.json') as val_qacap_sim:
+    val_qacap_sim = json.load(val_qacap_sim)
+
+for i in train_qacap_sim['data']:
+    # print(i)
+    if i['q_similarity'] < 0.77:   #숫자 변경
+        i['caption'] = ''
+
+for i in val_qacap_sim['data']:
+    # print(i)
+    if i['q_similarity'] < 0.77:   #숫자 변경
+        i['caption'] = ''
+
+for i in train_qacap_sim['data']:
+    i['question'] = i['question']+ ' ' + i['caption']
+
+for i in val_qacap_sim['data']:
+    i['question'] = i['question']+ ' ' + i['caption']
+
+df_train_t = pd.DataFrame(train_qacap_sim['data'])
+df_val_t = pd.DataFrame(val_qacap_sim['data'])
+
+##############3
+
+df_train_t = df_train_t.drop(['index', 'image_id', 'question_id'], axis='columns')
+df_train_t = df_train_t.sort_values(by='total_similarity',ascending=False)
+df_train_t[df_train_t.total_similarity >= 0.77]  #184145 개 41%
+df_train_t[df_train_t.q_similarity >= 0.77] # 329721개 74%
+
+df_val_t = df_val_t.drop(['index', 'image_id', 'question_id'], axis='columns')
+df_val_t[df_val_t.total_similarity >= 0.77]  #89274 개 42%
+df_val_t[df_val_t.q_similarity >= 0.77]  #160325개 75%
+
+df_train_t[round(df_train_t.total_similarity,2) == 0.95][['question','caption']]
+#############3
+
+
+df_train_t.iloc[0]
+del df_train_t['index']
+del df_train_t['caption']
+del df_train_t['q_similarity']
+del df_train_t['a_similarity']
+del df_train_t['total_similarity']
+del df_train_t['multiple_choice_answer']
+
+del df_val_t['index']
+del df_val_t['caption']
+del df_val_t['q_similarity']
+del df_val_t['a_similarity']
+del df_val_t['total_similarity']
+del df_val_t['multiple_choice_answer']
+
+df_train_t.to_json('datasets/caption/under/train_q_0.77.json', orient='table')
+df_val_t.to_json('datasets/caption/under/val_q_0.77.json', orient='table')
+####
 
 # df_tv = pd.concat([df_train, df_val], ignore_index=True)
 # df_tv = df_tv.drop(['image_id', 'question_id'], axis='columns')
@@ -37,7 +100,7 @@ for i in val_cap['data']:
 
 for i in test_cap['data']:
     # print(i)
-    if i['similarity'] < 0.9:
+    if i['similarity'] < 0.77:
         i['caption'] = ''
 
 

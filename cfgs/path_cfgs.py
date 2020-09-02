@@ -27,9 +27,9 @@ class PATH:
         }
 
         self.QUESTION_PATH = {
-            'train': self.DATASET_PATH + 'train_under08.json',
-            'val': self.DATASET_PATH + 'val_under08.json',
-            'test': self.DATASET_PATH + 'test_under08.json',
+            'train': self.DATASET_PATH + 'under/train_total_0.77.json',
+            'val': self.DATASET_PATH + 'under/val_total_0.77.json',
+            'test': self.DATASET_PATH + 'under/test_under077.json',
             'vg': self.DATASET_PATH + 'VG_questions.json',
         }
 
