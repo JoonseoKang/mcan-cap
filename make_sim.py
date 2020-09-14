@@ -28,36 +28,36 @@ with open('datasets/caption/val_qacap_sim.json') as val_qacap_sim:
 
 def make_similarity(limit, sim): #sim: q_similarity or total_similarity
 
-    with open('datasets/caption/train_qacap_sim.json') as train_qacap_sim:
-        train_qacap_sim = json.load(train_qacap_sim)
+    # with open('datasets/caption/train_qacap_sim.json') as train_qacap_sim:
+    #     train_qacap_sim = json.load(train_qacap_sim)
 
     with open('datasets/caption/val_qacap_sim.json') as val_qacap_sim:
         val_qacap_sim = json.load(val_qacap_sim)
 
-    for i in train_qacap_sim['data']:
-        # print(i)
-        if i[sim] < limit:  # 숫자 변경
-            i['caption'] = ''
+    # for i in train_qacap_sim['data']:
+    #     # print(i)
+    #     if i[sim] < limit:  # 숫자 변경
+    #         i['caption'] = ''
 
     for i in val_qacap_sim['data']:
         # print(i)
         if i[sim] < limit:  # 숫자 변경
             i['caption'] = ''
 
-    for i in train_qacap_sim['data']:
-        i['question'] = i['question'] + ' ' + i['caption']
+    # for i in train_qacap_sim['data']:
+    #     i['question'] = i['question'] + ' ' + i['caption']
 
     for i in val_qacap_sim['data']:
         i['question'] = i['question'] + ' ' + i['caption']
 
-    df_train_t = pd.DataFrame(train_qacap_sim['data'])
+    # df_train_t = pd.DataFrame(train_qacap_sim['data'])
     df_val_t = pd.DataFrame(val_qacap_sim['data'])
 
-    del df_train_t['caption']
-    del df_train_t['q_similarity']
-    del df_train_t['a_similarity']
-    del df_train_t['total_similarity']
-    del df_train_t['multiple_choice_answer']
+    # del df_train_t['caption']
+    # del df_train_t['q_similarity']
+    # del df_train_t['a_similarity']
+    # del df_train_t['total_similarity']
+    # del df_train_t['multiple_choice_answer']
 
     del df_val_t['caption']
     del df_val_t['q_similarity']
@@ -67,15 +67,15 @@ def make_similarity(limit, sim): #sim: q_similarity or total_similarity
 
     if not (os.path.isdir(os.path.join('datasets/caption/under',str(limit)))):
         os.makedirs(os.path.join('datasets/caption/under',str(limit)))
-    df_train_t.to_json(os.path.join('datasets/caption/under', str(limit), 'train_'+ sim + '.json'), orient='table')
-    df_train_t.to_json(os.path.join('datasets/caption/under', str(limit), 'val_' + sim + '.json'), orient='table')
+    # df_train_t.to_json(os.path.join('datasets/caption/under', str(limit), 'train_'+ sim + '.json'), orient='table')
+    df_val_t.to_json(os.path.join('datasets/caption/under', str(limit), 'val_' + sim + '.json'), orient='table')
 
-    with open(os.path.join('datasets/caption/under', str(limit),'train_'+ sim + '.json')) as train_cap:
-        train_cap = json.load(train_cap)
-
-    for i in train_cap['data']:
-        del i['level_0']
-        del i['index']
+    # with open(os.path.join('datasets/caption/under', str(limit),'train_'+ sim + '.json')) as train_cap:
+    #     train_cap = json.load(train_cap)
+    #
+    # for i in train_cap['data']:
+    #     del i['level_0']
+    #     del i['index']
 
     with open(os.path.join('datasets/caption/under', str(limit), 'val_'+ sim + '.json')) as val_cap:
         val_cap = json.load(val_cap)
@@ -83,9 +83,9 @@ def make_similarity(limit, sim): #sim: q_similarity or total_similarity
     for i in val_cap['data']:
         del i['level_0']
         del i['index']
-
-    with open(os.path.join('datasets/caption/under', str(limit), 'train_'+ sim + '.json'), 'w') as f:
-        json.dump(train_cap, f)
+    #
+    # with open(os.path.join('datasets/caption/under', str(limit), 'train_'+ sim + '.json'), 'w') as f:
+    #     json.dump(train_cap, f)
 
     with open(os.path.join('datasets/caption/under', str(limit), 'val_'+ sim + '.json'), 'w') as f2:
         json.dump(val_cap, f2)
