@@ -44,7 +44,7 @@ Finally, the `datasets` folders will have the following structure:
 	|  |-- v2_mscoco_val2014_annotations.json
 	|  |-- VG_questions.json
 	|  |-- VG_annotations.json
-	|--caption
+	|-- caption
 	|  |--0.60 (Threshold that you want )
 	|  |--0.61
 	|  |--...
