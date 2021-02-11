@@ -20,6 +20,7 @@ By using the commonly used bottom-up-attention visual features, a single MCAN mo
 #### Generate image caption
 We use pretrained [standard transformer model (Up-Down + Transformer)](https://github.com/yahoo/object_relation_transformer) to generate image captions.
 You can use generated captions at `datasets/caption`, `vis_cap_trainval` is captions for *train+val* datasets and `vis_cap_test` is captions for *test* dataset.
+You can calculate similarty with question and caption (or Q+A pair and caption) by using `cal_sim.py`. Then, you can set threshold and make text pharse(Q or Q+C) files by using `make_sim.py`.  
 
 #### Software and Hardware Requirements and Setup 
 For most setup and prerequets, refer to [MCAN](https://github.com/MILVLG/mcan-vqa).
@@ -48,7 +49,7 @@ Finally, the `datasets` folders will have the following structure:
 	|  |-- VG_questions.json
 	|  |-- VG_annotations.json
 	|-- caption
-	|  |--0.60 (Threshold that you want )
+	|  |--0.60 (Threshold that you want)
 	|  |--0.61
 	|  |--...
 	|  |--0.99
