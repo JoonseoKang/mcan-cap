@@ -1,6 +1,6 @@
 # Deep Modular Co-Attention Networks with Similar Caption (MCAN-Cap)
 
-MCAN_Cap is a modified model of [MCAN](https://github.com/MILVLG/mcan-vqa) that uses only similar image caption. With similar generated captions without stopword, we achieved an overall accuracy **67.41%** on *val* splits. 
+MCAN-Cap is a modified model of [MCAN](https://github.com/MILVLG/mcan-vqa) that uses only similar image caption. With similar generated captions without stopword, we achieved an overall accuracy **67.41%** on *val* splits. 
 
 By using the commonly used bottom-up-attention visual features, a single MCAN model delivers **67.20%** (small model) overall accuracy on the *val* split of *VQA-v2* dataset. Please check our [paper](http://) for details.
 
