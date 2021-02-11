@@ -19,7 +19,7 @@ By using the commonly used bottom-up-attention visual features, a single MCAN mo
 ## Prerequisites
 #### Generate image caption
 We use pretrained [standard transformer model (Up-Down + Transformer)](https://github.com/yahoo/object_relation_transformer) to generate image captions.
-You can use generated captions at `datasets/caption`, `vis_cap_trainval` is captions for train+val datasets and `vis_cap_test` is captions for test dataset.
+You can use generated captions at `datasets/caption`, `vis_cap_trainval` is captions for *train+val* datasets and `vis_cap_test` is captions for *test* dataset.
 
 #### Software and Hardware Requirements and Setup 
 For most setup and prerequets, refer to [MCAN](https://github.com/MILVLG/mcan-vqa).
@@ -163,6 +163,3 @@ _mcan_all_caption_ | 67.32 | 84.44 | 50.00 | 58.84|
 _mcan_cap_ | **67.41**| 84.71 | **50.04** | **58.85**|
 
 When using Answer and Question, *overall* performance increased to **68.19**.
-
-
-```
