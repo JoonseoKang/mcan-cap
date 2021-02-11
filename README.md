@@ -90,6 +90,7 @@ To add：
 
 8. ```--PRELOAD=True``` to pre-load all the image features into memory during the initialization stage (Warning: needs extra 25~30GB memory and 30min loading time from an HDD drive).
 
+9. ```--MAX_TOKEN=int``` to set using token number. I recommand 10 to 20 tokens(too many or fewer tokens doesn`t work well).
 
 ####  Multi-GPU Training and Gradient Accumulation
 
