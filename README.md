@@ -21,12 +21,6 @@ By using the commonly used bottom-up-attention visual features, a single MCAN mo
 #### Software and Hardware Requirements and Setup 
 For most setup and prerequets, refer to [MCAN](https://github.com/MILVLG/mcan-vqa).
 
-
-Running the script will: 
-
-1. Download the QA files for [VQA-v2](https://visualqa.org/download.html).
-2. Unzip the bottom-up features
-
 Finally, the `datasets` folders will have the following structure:
 
 ```angular2html
@@ -50,6 +44,11 @@ Finally, the `datasets` folders will have the following structure:
 	|  |-- v2_mscoco_val2014_annotations.json
 	|  |-- VG_questions.json
 	|  |-- VG_annotations.json
+	|--caption
+	|  |--0.60 (Threshold that you want )
+	|  |--0.61
+	|  |--...
+	|  |--0.99
 
 ```
 
