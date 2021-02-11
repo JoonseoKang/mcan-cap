@@ -163,4 +163,4 @@ _mcan_ | 67.2 | **84.83** | 48.52 | 58.69|
 _mcan_all_caption_ | 67.32 | 84.44 | 50.00 | 58.84| 
 _mcan_cap_ | **67.41**| 84.71 | **50.04** | **58.85**|
 
-When using Answer and Question, *overall* performance increased to **68.19**.
+When using similar captions with Answer and Question pairs, *overall* performance increased to **68.19**.
