@@ -19,6 +19,7 @@ By using the commonly used bottom-up-attention visual features, a single MCAN mo
 ## Prerequisites
 #### Generate image caption
 We use pretrained [standard transformer model (Up-Down + Transformer)](https://github.com/yahoo/object_relation_transformer) to generate image captions.
+You can use generated captions from 'datasets/caption'
 
 #### Software and Hardware Requirements and Setup 
 For most setup and prerequets, refer to [MCAN](https://github.com/MILVLG/mcan-vqa).
