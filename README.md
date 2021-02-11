@@ -22,7 +22,7 @@ We use pretrained [standard transformer model (Up-Down + Transformer)](https://g
 
 You can use generated captions at `datasets/caption`, `vis_cap_trainval` is captions for *train+val* datasets and `vis_cap_test` is captions for *test* dataset.
 
-You can calculate similarty with question and caption (or Q+A pair and caption) by using `cal_sim.py`. Then, you can set threshold and make text pharse(Q or Q+C) files by using `make_sim.py`.  
+You can calculate similarity with question and caption (or Q+A pair and caption) by using `cal_sim.py`. Then, you can set threshold and make text pharse(Q or Q+C) files by using `make_sim.py`.  
 
 #### Software and Hardware Requirements and Setup 
 For most setup and prerequets, refer to [MCAN](https://github.com/MILVLG/mcan-vqa).
