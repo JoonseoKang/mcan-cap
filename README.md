@@ -11,15 +11,15 @@ By using the commonly used bottom-up-attention visual features, a single MCAN mo
 0. [Prerequisites](#Prerequisites)
 0. [Training](#Training)
 0. [Validation and Testing](#Validation-and-Testing)
-0. [Pretrained models](#Pretrained-models)
-0. [Citation](#Citation)
+0. [Model Zoo](#Performance)
+
 
 
 
 ## Prerequisites
 #### Generate image caption
 We use pretrained [standard transformer model (Up-Down + Transformer)](https://github.com/yahoo/object_relation_transformer) to generate image captions.
-You can use generated captions from 'datasets/caption'
+You can use generated captions at `datasets/caption`, `vis_cap_trainval` is captions for train+val datasets and `vis_cap_test` is captions for test dataset.
 
 #### Software and Hardware Requirements and Setup 
 For most setup and prerequets, refer to [MCAN](https://github.com/MILVLG/mcan-vqa).
