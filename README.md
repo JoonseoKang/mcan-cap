@@ -1,8 +1,8 @@
 # Deep Modular Co-Attention Networks with Similar Caption (MCAN-Cap)
 
-With an ensemble of 27 models, we achieved an overall accuracy **75.23%** and **75.26%** on *test-std* and *test-challenge* splits, respectively. See our  [slides](https://drive.google.com/open?id=1geJTEVMMGs9Y3S2_pZxNzgPMccfYpM_r) for details.
+With similar generated captions without stopword, we achieved an overall accuracy **67.41%** on *val* splits. 
 
-By using the commonly used bottom-up-attention visual features, a single MCAN model delivers **70.70%** (small model) and **70.93%** (large model) overall accuracy on the *test-dev* split of *VQA-v2* dataset respectively, which significantly outperform existing state-of-the-arts. Please check our [paper](http://openaccess.thecvf.com/content_CVPR_2019/html/Yu_Deep_Modular_Co-Attention_Networks_for_Visual_Question_Answering_CVPR_2019_paper.html) for details.
+By using the commonly used bottom-up-attention visual features, a single MCAN model delivers **67.20%** (small model) overall accuracy on the *val* split of *VQA-v2* dataset. Please check our [paper](http://) for details.
 
 ![Overview of MCAN](misc/mcan_cap.png)
 
