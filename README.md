@@ -150,16 +150,14 @@ Result files are stored in ```results/result_test/result_run_<'PATH+random numbe
 You can upload the obtained result json file to [Eval AI](https://evalai.cloudcv.org/web/challenges/challenge-page/163/overview) to evaluate the scores on *test-dev* and *test-std* splits.
 
 
-## Pretrained models
-
-We provide two pretrained models, namely the `small` model and the `large` model. The small model corrresponds to the one describe in our paper with slightly higher performance (the overall accuracy on the *test-dev* split is 70.63% in our paper) due to different pytorch versions. The large model uses a 2x larger `HIDDEN_SIZE=1024` compared to the small model with `HIDDEN_SIZE=512`. 
-
-The performance of the two models on *test-dev* split is reported as follows:
+## Model Zoo
+The performance of the model on *val* split is reported as follows:
 
 _Model_ | Overall | Yes/No | Number | Other
 :-: | :-: | :-: | :-: | :-:
-_Small_ | 70.7 | 86.91 | **53.42** | 60.75| 
-_Large_ | **70.93**| **87.39** | 52.78 | **60.98**|
+_mcan_ | 67.2 | **84.83** | 48.52 | 58.69| 
+_mcan_all_caption_ | 67.32 | 84.44 | 50.00 | 58.84| 
+_mcan_cap_ | **67.41**| 84.71 | **50.04** | **58.85**|
 
 
 These two models can be downloaded from [OneDrive](https://awma1-my.sharepoint.com/:f:/g/personal/yuz_l0_tn/EtNU5OG1dNhMq8M1pgeuQZwBgcj2RQCVnzLGDeDfnejPMQ?e=ynYhvk) or [BaiduYun](https://pan.baidu.com/s/1GW_SFErXSIBJ2Ojg2qaRmw#list/path=%2F), and you should unzip and put them to the correct folders as follows:
