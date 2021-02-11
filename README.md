@@ -159,31 +159,7 @@ _mcan_ | 67.2 | **84.83** | 48.52 | 58.69|
 _mcan_all_caption_ | 67.32 | 84.44 | 50.00 | 58.84| 
 _mcan_cap_ | **67.41**| 84.71 | **50.04** | **58.85**|
 
-
-These two models can be downloaded from [OneDrive](https://awma1-my.sharepoint.com/:f:/g/personal/yuz_l0_tn/EtNU5OG1dNhMq8M1pgeuQZwBgcj2RQCVnzLGDeDfnejPMQ?e=ynYhvk) or [BaiduYun](https://pan.baidu.com/s/1GW_SFErXSIBJ2Ojg2qaRmw#list/path=%2F), and you should unzip and put them to the correct folders as follows:
-
-```angular2html
-|-- ckpts
-	|-- ckpt_small
-	|  |-- epoch13.pkl
-	|-- ckpt_large
-	|  |-- epoch13.pkl
-
-```
-
-Set ```--CKPT={'small', 'large'} --CKPT_E=13``` to testing or resume training, details can be found in [Training](#Training) and [Validation and Testing](#Validation-and-Testing). 
+When using Answer and Question, *overall* performance increased to **68.19**.
 
 
-## Citation
-
-If this repository is helpful for your research, we'd really appreciate it if you could cite the following paper:
-
-```
-@inProceedings{yu2019mcan,
-  author = {Yu, Zhou and Yu, Jun and Cui, Yuhao and Tao, Dacheng and Tian, Qi},
-  title = {Deep Modular Co-Attention Networks for Visual Question Answering},
-  booktitle = {Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
-  pages = {6281--6290},
-  year = {2019}
-}
 ```
